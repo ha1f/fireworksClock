@@ -34,7 +34,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.051975474800395688" green="0.035104486292395903" blue="0.31488827720207258" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.01369709774274472" green="0.0092510858592893194" blue="0.082982512953367893" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
                         <outlet property="fireworksView" destination="AWC-eD-GF8" id="Map-gx-uMP"/>

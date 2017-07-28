@@ -14,78 +14,87 @@ import QuartzCore
 class FireworksView: UIView {
     
     let emitterLayer = CAEmitterLayer()
-    lazy var particleImage: UIImage = {
-        let imageSize = CGSize(width: 50, height: 50)
+    
+    private static func circleImage(color: UIColor) -> UIImage {
+        let imageSize = CGSize(width: 25, height: 25)
         let margin: CGFloat = 0
         let circleSize = CGSize(width: imageSize.width - margin * 2, height: imageSize.height - margin * 2)
         UIGraphicsBeginImageContext(imageSize)
         if let context = UIGraphicsGetCurrentContext() {
-            context.setFillColor(UIColor.red.cgColor)
+            context.setFillColor(color.cgColor)
             context.fillEllipse(in: CGRect(origin: CGPoint(x: margin, y: margin), size: circleSize))
         }
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsPopContext()
         return image!
-    }()
+    }
     
     func setup() {
         emitterLayer.emitterPosition = CGPoint(x: self.bounds.midX, y: self.bounds.maxY)
         emitterLayer.emitterMode = kCAEmitterLayerAdditive
         
-        let baseCell = CAEmitterCell()
-        baseCell.emissionLongitude = -CGFloat.pi / 2
-        baseCell.emissionLatitude = 0
-        baseCell.emissionRange = CGFloat.pi / 5
-        baseCell.lifetime = 2.0
-        baseCell.birthRate = 0.5
-        baseCell.velocity = 400
-        baseCell.velocityRange = 50
-        baseCell.yAcceleration = 300
-        // パーティクルの色
-        baseCell.color = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
-        baseCell.redRange   = 0.5
-        baseCell.greenRange = 0.5
-        baseCell.blueRange  = 0.5
-        baseCell.alphaRange = 0.5
+        let sparkDelay: Float = 1.5
         
         // 上昇中のパーティクルの発生源
         let risingCell = CAEmitterCell()
-        risingCell.contents = particleImage.cgImage
+        risingCell.contents = FireworksView.circleImage(color: UIColor.red).cgImage
         risingCell.emissionLongitude = (4 * CGFloat.pi) / 2
         risingCell.emissionRange = CGFloat.pi / 7
-        risingCell.scale = 0.3
+        risingCell.scale = 0.2
         risingCell.velocity = 100
         risingCell.birthRate = 50
-        risingCell.lifetime = 1.5
-        risingCell.yAcceleration = 350
+        risingCell.lifetime = sparkDelay
+        risingCell.yAcceleration = 200
         risingCell.alphaSpeed = -0.7
         risingCell.scaleSpeed = -0.1
         risingCell.scaleRange = 0.1
         risingCell.beginTime = 0.01
-        risingCell.duration = 0.7
+        risingCell.duration = 0.9
         
-        // 破裂後に飛散するパーティクルの発生源
-        let sparkCell = CAEmitterCell()
-        sparkCell.contents = particleImage.cgImage
-        // パーティクルを発生する角度の範囲
-        sparkCell.emissionRange = 2 * CGFloat.pi
-        // １秒間に生成するパーティクルの数
-        sparkCell.birthRate = 8000
-        sparkCell.scale = 0.2
-        sparkCell.velocity = 130
-        // パーティクルが発生してから消えるまでの時間(s)
-        sparkCell.lifetime = 2.0
-        sparkCell.yAcceleration = 80
-        sparkCell.beginTime = CFTimeInterval(risingCell.lifetime)
-        sparkCell.duration = 0.1
-        sparkCell.alphaSpeed = -0.1
-        sparkCell.scaleSpeed = -0.1
+        // 破裂後
+        let generateSparkCell = { (particle: UIImage, birthRate: Float) -> CAEmitterCell in
+            let sparkCell = CAEmitterCell()
+            sparkCell.contents = particle.cgImage
+            sparkCell.emissionRange = 2 * CGFloat.pi
+            sparkCell.birthRate = birthRate
+            sparkCell.scale = 0.2
+            sparkCell.velocity = 130
+            sparkCell.lifetime = 2.0
+            sparkCell.lifetimeRange = 0.4
+            sparkCell.yAcceleration = 80
+            sparkCell.beginTime = CFTimeInterval(sparkDelay)
+            sparkCell.duration = 0.1
+            sparkCell.alphaSpeed = -0.1
+            sparkCell.scaleSpeed = -0.1
+            return sparkCell
+        }
+        let redSparkCell = generateSparkCell(FireworksView.circleImage(color: UIColor.red), 2000)
+        let yellowSparkCell = generateSparkCell(FireworksView.circleImage(color: UIColor.yellow), 2000)
+        let blueSparkCell = generateSparkCell(FireworksView.circleImage(color: UIColor.blue), 2000)
+        let whiteSparkCell = generateSparkCell(FireworksView.circleImage(color: UIColor.white), 2000)
+        let greenSparkCell8000 = generateSparkCell(FireworksView.circleImage(color: UIColor.green), 8000)
         
-        // baseCellからrisingCellとsparkCellを発生させる
-        baseCell.emitterCells = [risingCell, sparkCell]
+        let generateBaseCell = { (birthRate: Float, cells: [CAEmitterCell]) -> CAEmitterCell in
+            let base = CAEmitterCell()
+            base.emissionLongitude = -CGFloat.pi / 2
+            base.emissionLatitude = 0
+            base.emissionRange = CGFloat.pi / 5
+            base.lifetime = 2.0
+            base.birthRate = birthRate
+            base.velocity = 400
+            base.velocityRange = 50
+            base.yAcceleration = 300
+            base.emitterCells = cells
+            return base
+        }
         
-        // baseCellはemitterLayerから発生させる
-        self.emitterLayer.emitterCells = [baseCell]
+        // 花火うちあげ元（花火玉の設定）
+        let blueWhiteBase = generateBaseCell(0.4, [risingCell, blueSparkCell, blueSparkCell, whiteSparkCell, blueSparkCell])
+        let redYellowBase = generateBaseCell(1.1, [risingCell, redSparkCell, yellowSparkCell, redSparkCell, yellowSparkCell])
+        let greenBase = generateBaseCell(0.6, [risingCell, greenSparkCell8000])
+        
+        // redYellowBaseはemitterLayerから発生させる
+        self.emitterLayer.emitterCells = [redYellowBase, blueWhiteBase, greenBase]
         self.layer.addSublayer(emitterLayer)
     }
 }
