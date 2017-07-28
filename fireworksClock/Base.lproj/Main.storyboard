@@ -21,20 +21,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AWC-eD-GF8" customClass="FireworksView" customModule="fireworksClock" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AWC-eD-GF8" customClass="FireworksView" customModule="fireworksClock" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12:34" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lP-2i-JjS">
-                                <rect key="frame" x="90" y="68" width="487" height="238"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:34" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lP-2i-JjS">
+                                <rect key="frame" x="149" y="97" width="369" height="180"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="150"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.01369709774274472" green="0.0092510858592893194" blue="0.082982512953367893" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="AWC-eD-GF8" secondAttribute="bottom" id="2O1-sA-2pu"/>
+                            <constraint firstAttribute="trailing" secondItem="AWC-eD-GF8" secondAttribute="trailing" id="2vq-hH-fx1"/>
+                            <constraint firstItem="5lP-2i-JjS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="4Ez-uY-LSl"/>
+                            <constraint firstItem="5lP-2i-JjS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4H3-v3-7e5"/>
+                            <constraint firstItem="AWC-eD-GF8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="B3c-8M-lLA"/>
+                            <constraint firstItem="AWC-eD-GF8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dtS-yA-yvW"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="fireworksView" destination="AWC-eD-GF8" id="Map-gx-uMP"/>

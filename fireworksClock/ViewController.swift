@@ -16,6 +16,9 @@ class FireworksView: UIView {
     
     let emitterLayer = CAEmitterLayer()
     let sparkDelay: Float = 1.5
+    var emitterCells: [CAEmitterCell] {
+        return self.emitterLayer.emitterCells ?? []
+    }
     
     /// returns circle image filled with specified color
     private static func generateCircleImage(with color: UIColor, size: CGSize = CGSize(width: 25, height: 25), inset: UIEdgeInsets = .zero) -> UIImage {
@@ -91,9 +94,13 @@ class FireworksView: UIView {
         return risingCell
     }
     
+    func resetEmitPosition() {
+        // 下過ぎないように
+        emitterLayer.emitterPosition = CGPoint(x: self.bounds.midX, y: min(self.bounds.maxY, 450))
+    }
+    
 
     func setup() {
-        emitterLayer.emitterPosition = CGPoint(x: self.bounds.midX, y: self.bounds.maxY)
         emitterLayer.emitterMode = kCAEmitterLayerAdditive
         
         let risingCell = self.generateRisingCell(particle: FireworksView.generateCircleImage(with: UIColor.red))
@@ -105,6 +112,7 @@ class FireworksView: UIView {
         
         self.emitterLayer.emitterCells = [redYellowBase, blueWhiteBase, greenBase]
         self.layer.addSublayer(emitterLayer)
+        resetEmitPosition()
     }
 }
 
@@ -138,12 +146,26 @@ class ViewController: UIViewController {
             unwrappedSelf.timeLabel.text = unwrappedSelf.dateFormatter.string(from: now)
         }
         updateTimer.fire()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.onTap(recognizer:)))
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    func onTap(recognizer: UIGestureRecognizer) {
+        fireworksView.emitterCells.forEach { cell in
+            cell.birthRate = cell.birthRate != 0 ? 0 : 0.5
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.isIdleTimerDisabled = false
         updateTimer.invalidate()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.fireworksView.resetEmitPosition()
     }
 
 }

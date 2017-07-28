@@ -507,6 +507,7 @@
 				E93B29291F2B6E4C00446F5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E93B292A1F2B6E4C00446F5F /* Build configuration list for PBXNativeTarget "fireworksClockTests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +516,7 @@
 				E93B292C1F2B6E4C00446F5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E93B292D1F2B6E4C00446F5F /* Build configuration list for PBXNativeTarget "fireworksClockUITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +525,7 @@
 				E93B292F1F2B6E4C00446F5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
