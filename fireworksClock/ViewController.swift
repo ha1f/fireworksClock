@@ -36,20 +36,25 @@ class FireworksView: UIView {
         let sparkDelay: Float = 1.5
         
         // 上昇中のパーティクルの発生源
-        let risingCell = CAEmitterCell()
-        risingCell.contents = FireworksView.circleImage(color: UIColor.red).cgImage
-        risingCell.emissionLongitude = (4 * CGFloat.pi) / 2
-        risingCell.emissionRange = CGFloat.pi / 7
-        risingCell.scale = 0.2
-        risingCell.velocity = 100
-        risingCell.birthRate = 50
-        risingCell.lifetime = sparkDelay
-        risingCell.yAcceleration = 200
-        risingCell.alphaSpeed = -0.7
-        risingCell.scaleSpeed = -0.1
-        risingCell.scaleRange = 0.1
-        risingCell.beginTime = 0.01
-        risingCell.duration = 0.9
+        let generateRisingCell = { (particle: UIImage) -> CAEmitterCell in
+            let risingCell = CAEmitterCell()
+            risingCell.contents = particle.cgImage
+            risingCell.emissionLongitude = (4 * CGFloat.pi) / 2
+            risingCell.emissionRange = CGFloat.pi / 7
+            risingCell.scale = 0.2
+            risingCell.velocity = 100
+            risingCell.birthRate = 50
+            risingCell.lifetime = sparkDelay
+            risingCell.yAcceleration = 200
+            risingCell.alphaSpeed = -0.7
+            risingCell.scaleSpeed = -0.1
+            risingCell.scaleRange = 0.1
+            risingCell.beginTime = 0.01
+            risingCell.duration = 0.9
+            return risingCell
+        }
+        
+        let risingCell = generateRisingCell(FireworksView.circleImage(color: UIColor.red))
         
         // 破裂後
         let generateSparkCell = { (particle: UIImage, birthRate: Float) -> CAEmitterCell in
@@ -118,6 +123,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // 自動ロックしないように
         UIApplication.shared.isIdleTimerDisabled = true
         
         updateTimer = Timer(timeInterval: 0.5, repeats: true) { [weak self] _ in
