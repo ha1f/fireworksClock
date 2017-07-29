@@ -14,6 +14,8 @@
 		E93B290D1F2B6E4C00446F5F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E93B290B1F2B6E4C00446F5F /* LaunchScreen.storyboard */; };
 		E93B29181F2B6E4C00446F5F /* fireworksClockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93B29171F2B6E4C00446F5F /* fireworksClockTests.swift */; };
 		E93B29231F2B6E4C00446F5F /* fireworksClockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93B29221F2B6E4C00446F5F /* fireworksClockUITests.swift */; };
+		E93B29321F2C683800446F5F /* stand2_back05_man.png in Resources */ = {isa = PBXBuildFile; fileRef = E93B29311F2C683800446F5F /* stand2_back05_man.png */; };
+		E93B29341F2C693D00446F5F /* stand2_back06_woman.png in Resources */ = {isa = PBXBuildFile; fileRef = E93B29331F2C693D00446F5F /* stand2_back06_woman.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		E93B291E1F2B6E4C00446F5F /* fireworksClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fireworksClockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93B29221F2B6E4C00446F5F /* fireworksClockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fireworksClockUITests.swift; sourceTree = "<group>"; };
 		E93B29241F2B6E4C00446F5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E93B29311F2C683800446F5F /* stand2_back05_man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stand2_back05_man.png; sourceTree = "<group>"; };
+		E93B29331F2C693D00446F5F /* stand2_back06_woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stand2_back06_woman.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,7 @@
 		E93B29011F2B6E4C00446F5F /* fireworksClock */ = {
 			isa = PBXGroup;
 			children = (
+				E93B29301F2C681E00446F5F /* images */,
 				E93B29021F2B6E4C00446F5F /* AppDelegate.swift */,
 				E93B29041F2B6E4C00446F5F /* ViewController.swift */,
 				E93B29061F2B6E4C00446F5F /* Main.storyboard */,
@@ -123,6 +128,15 @@
 				E93B29241F2B6E4C00446F5F /* Info.plist */,
 			);
 			path = fireworksClockUITests;
+			sourceTree = "<group>";
+		};
+		E93B29301F2C681E00446F5F /* images */ = {
+			isa = PBXGroup;
+			children = (
+				E93B29331F2C693D00446F5F /* stand2_back06_woman.png */,
+				E93B29311F2C683800446F5F /* stand2_back05_man.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,7 +246,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E93B29321F2C683800446F5F /* stand2_back05_man.png in Resources */,
 				E93B290D1F2B6E4C00446F5F /* LaunchScreen.storyboard in Resources */,
+				E93B29341F2C693D00446F5F /* stand2_back06_woman.png in Resources */,
 				E93B290A1F2B6E4C00446F5F /* Assets.xcassets in Resources */,
 				E93B29081F2B6E4C00446F5F /* Main.storyboard in Resources */,
 			);
