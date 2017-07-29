@@ -153,7 +153,7 @@ class CrowdView: UIView {
         (0..<number)
             .map { _ in
                 let image = CrowdView.images[Int(arc4random_uniform(UInt32(candidatesCount)))]
-                let xPos = CGFloat(arc4random_uniform(UInt32(self.bounds.width)))
+                let xPos = CGFloat(arc4random_uniform(UInt32(self.bounds.width + CrowdView.imageSize.width))) - CrowdView.imageSize.width
                 let yOffset = CrowdView.imageBottomOffset + CGFloat(arc4random_uniform(UInt32(CrowdView.imageBottomOffsetRange))) - CrowdView.imageBottomOffsetRange / 2
                 let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: self.bounds.height - CrowdView.imageSize.height + yOffset), size: CrowdView.imageSize))
                 imageView.image = image
