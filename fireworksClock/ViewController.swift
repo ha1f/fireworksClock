@@ -154,15 +154,6 @@ class ViewController: UIViewController {
             unwrappedSelf.timeLabel.text = unwrappedSelf.dateFormatter.string(from: now)
         }
         updateTimer.fire()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.onTap(recognizer:)))
-        self.view.addGestureRecognizer(tapGesture)
-    }
-    
-    func onTap(recognizer: UIGestureRecognizer) {
-        fireworksView.emitterCells.forEach { cell in
-            cell.birthRate = cell.birthRate != 0 ? 0 : 0.5
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
