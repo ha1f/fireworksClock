@@ -113,14 +113,55 @@ class FireworksView: UIView {
         let risingCell = self.generateRisingCell(particle: FireworksView.generateCircleImage(with: UIColor.red))
         
         // 花火うちあげ元
-        let blueWhiteBase = generateBaseCell(birthRate: 0.4, risingCell: risingCell, colors: [.blue, .blue, .white, .blue])
-        let redYellowBase = generateBaseCell(birthRate: 0.8, risingCell: risingCell, colors: [.red, .yellow, .red, .yellow])
-        let greenBase = generateBaseCell(birthRate: 0.6, risingCell: risingCell, colors: [.green])
-        let colorfulBase = generateBaseCell(birthRate: 1.2, risingCell: generateRisingCell(), colors: [.white], isColorful: true)
+        let blueWhiteBase = generateBaseCell(birthRate: 0.2, risingCell: risingCell, colors: [.blue, .blue, .white, .blue])
+        let redYellowBase = generateBaseCell(birthRate: 0.7, risingCell: risingCell, colors: [.red, .yellow, .red, .yellow])
+        let greenBase = generateBaseCell(birthRate: 0.3, risingCell: risingCell, colors: [.green])
+        let colorfulBase = generateBaseCell(birthRate: 1.7, risingCell: generateRisingCell(), colors: [.white], isColorful: true)
         
         self.emitterLayer.emitterCells = [redYellowBase, blueWhiteBase, greenBase, colorfulBase]
         self.layer.addSublayer(emitterLayer)
         resetEmitPosition()
+    }
+}
+
+class CrowdView: UIView {
+    private var personViews: [UIView] = []
+    
+    static let images = [
+        #imageLiteral(resourceName: "stand2_back01_boy.png"), #imageLiteral(resourceName: "stand2_back02_girl.png"), #imageLiteral(resourceName: "stand2_back03_youngman.png"), #imageLiteral(resourceName: "stand2_back05_man.png"), #imageLiteral(resourceName: "stand2_back06_woman.png"), #imageLiteral(resourceName: "stand2_back07_ojisan.png"), #imageLiteral(resourceName: "stand2_back08_obasan.png"), #imageLiteral(resourceName: "stand2_back09_ojiisan.png"), #imageLiteral(resourceName: "stand2_back10_obaasan.png")
+    ]
+    
+    static let imageSize = CGSize(width: 90, height: 150)
+    // 足元の食い込み
+    static let imageBottomOffset: CGFloat = 20
+    static let imageBottomOffsetRange: CGFloat = 26
+    
+    private func appendPersonView(_ view: UIView) {
+        personViews.append(view)
+        self.addSubview(view)
+    }
+    
+    private func resetPersons() {
+        personViews.forEach { view in
+            view.removeFromSuperview()
+        }
+        personViews = []
+    }
+    
+    func setup(_ number: Int = 5) {
+        let candidatesCount = CrowdView.images.count
+        (0..<number)
+            .map { _ in
+                let image = CrowdView.images[Int(arc4random_uniform(UInt32(candidatesCount)))]
+                let xPos = CGFloat(arc4random_uniform(UInt32(self.bounds.width)))
+                let yOffset = CrowdView.imageBottomOffset + CGFloat(arc4random_uniform(UInt32(CrowdView.imageBottomOffsetRange))) - CrowdView.imageBottomOffsetRange / 2
+                let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: self.bounds.height - CrowdView.imageSize.height + yOffset), size: CrowdView.imageSize))
+                imageView.image = image
+                return imageView
+            }
+            .forEach { imageView in
+                self.appendPersonView(imageView)
+        }
     }
 }
 
@@ -132,6 +173,11 @@ class ViewController: UIViewController {
         }
     }
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var crowdView: CrowdView! {
+        didSet {
+            crowdView.setup(15)
+        }
+    }
     
     var updateTimer: Timer!
     lazy var dateFormatter: DateFormatter = {
